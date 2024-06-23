@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-final Uri _url = Uri.parse('https://tambord.com/');
+import 'package:provider/provider.dart';
+import 'src/core/my_app.dart';
+import 'src/logic/url_provider.dart';
 
 void main() => runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        darkTheme: ThemeData.dark(),
-        home: const Material(
-          child: Center(
-            child: ElevatedButton(
-              onPressed: _launchUrl,
-              child: Icon(Icons.home_rounded),
-            ),
-          ),
-        ),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => UrlProvider()),
+        ],
+        child: const MyApp(),
       ),
     );
 
-Future<void> _launchUrl() async {
-  if (!await launchUrl(_url, mode: LaunchMode.inAppWebView)) {
-    throw Exception('Could not launch $_url');
-  }
-}
+
