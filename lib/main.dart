@@ -11,8 +11,3 @@ void main() => runApp(
         child: const MyApp(),
       ),
     );
-
-
-
-
-
