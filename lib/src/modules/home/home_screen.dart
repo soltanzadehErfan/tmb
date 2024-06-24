@@ -22,11 +22,16 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       await urlProvider.launchWebsite();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+      _showErrorSnackBar(e);
     }
   }
+
+  void _showErrorSnackBar(dynamic error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Failed to launch URL: ${error.toString()}')),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
