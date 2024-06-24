@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tmb/src/components/empty_content.dart';
 import '../../logic/connectivity_service.dart';
 import '../../logic/url_provider.dart';
 
@@ -50,8 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Material(
       child: Center(
         child: _connectionStatus == 'offline'
-            ? const SizedBox(
-                child: Text('you are offline'),
+            ? const EmptyContent(
+                message: 'you are offline :(',
               )
             : ElevatedButton(
                 onPressed: () async {
