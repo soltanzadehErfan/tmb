@@ -1,6 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-///[connectivityChecker]: checks for users device network connectivity status in 3 results containing mobile data, wifi and ethernet
+///[connectivityChecker]: checks for users device network connectivity status in 3 ways which contains mobile data, wifi and ethernet
 void connectivityChecker() async {
   final List<ConnectivityResult> connectivityResult =
       await (Connectivity().checkConnectivity());
