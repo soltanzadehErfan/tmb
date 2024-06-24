@@ -23,3 +23,12 @@
 //     await tester.pump();
 //   });
 // }
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:tmb/src/logic/url_provider.dart';
+
+void main() {
+  test('UrlProvider launches website', () async {
+    final urlProvider = UrlProvider();
+  });
+}
