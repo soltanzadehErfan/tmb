@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _launchUrlOnStart() async {
     final urlProvider = Provider.of<UrlProvider>(context, listen: false);
     try {
-      await urlProvider.launchWebsite();
+      await urlProvider.launchTambord();
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString())),
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
             final urlProvider =
                 Provider.of<UrlProvider>(context, listen: false);
             try {
-              await urlProvider.launchWebsite();
+              await urlProvider.launchTambord();
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(e.toString())),
