@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../../logic/connectivity_service.dart';
 import '../../logic/url_provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,10 +11,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String _connectionStatus = 'unknown';
+
   @override
   void initState() {
     super.initState();
-    _launchUrlOnStart();
+    _checkConnectivity();
+  }
+
+  Future<void> _checkConnectivity() async {
+    final status = await connectivityChecker();
+    setState(() {
+      _connectionStatus = status;
+    });
+
+    if (status == 'online') {
+      _launchUrlOnStart();
+    }
   }
 
   void _launchUrlOnStart() async {
@@ -32,25 +45,28 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Material(
       child: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            final urlProvider =
-                Provider.of<UrlProvider>(context, listen: false);
-            try {
-              await urlProvider.launchTambord();
-            } catch (e) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(e.toString())),
-              );
-            }
-          },
-          child: const Icon(Icons.home_rounded),
-        ),
+        child: _connectionStatus == 'offline'
+            ? const SizedBox(
+                child: Text('you are offline'),
+              )
+            : ElevatedButton(
+                onPressed: () async {
+                  final urlProvider =
+                      Provider.of<UrlProvider>(context, listen: false);
+                  try {
+                    await urlProvider.launchTambord();
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(e.toString())),
+                    );
+                  }
+                },
+                child: const Icon(Icons.home_rounded),
+              ),
       ),
     );
   }
