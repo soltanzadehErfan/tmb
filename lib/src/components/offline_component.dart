@@ -1,43 +1,79 @@
+import 'package:ditredi/ditredi.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vector_math/vector_math_64.dart';
 
-import '../utils/icons.dart';
+import '../utils/assets.dart';
 
-/// [OfflineComponent]: Use this as a offline handling widget
-class OfflineComponent extends StatelessWidget {
-  const OfflineComponent({
-    super.key,
-  });
+/// [OfflineComponent]: Use this as an offline handling widget
+class OfflineComponent extends StatefulWidget {
+  const OfflineComponent({super.key});
+
+  @override
+  State<OfflineComponent> createState() => _OfflineComponentState();
+}
+
+class _OfflineComponentState extends State<OfflineComponent> {
+  late DiTreDiController controller;
+  Mesh3D? mesh;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = DiTreDiController(
+      rotationX: -20,
+      rotationY: 30,
+      light: Vector3(-0.5, -0.5, 0.5),
+    );
+    _loadMesh();
+  }
+
+  Future<void> _loadMesh() async {
+    try {
+      final List<Face3D> faces =
+          await ObjParser().loadFromResources(dinosaurObj);
+      setState(() {
+        mesh = Mesh3D(faces);
+      });
+    } catch (e) {
+      print("Error loading 3D object: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 64),
-            SpinKitWaveSpinner(
-              color: Colors.white,
-              trackColor: Colors.blue,
-              size: 100.0,
-              child: Icon(Icons.network_check_rounded),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 300,
+            width: 300,
+            child: mesh == null
+                ? const CircularProgressIndicator()
+                : DiTreDiDraggable(
+                    controller: controller,
+                    child: DiTreDi(
+                      figures: [
+                        mesh!,
+                      ],
+                      controller: controller,
+                    ),
+                  ),
+          ),
+          const Text(
+            'YOU ARE OFFLINE :(',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
-            SizedBox(height: 8),
-            TextButton(
-              onPressed: null,
-              child: Text(
-                'You are offline :(',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
