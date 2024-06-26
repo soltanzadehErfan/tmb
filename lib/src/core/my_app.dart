@@ -9,6 +9,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: 'Tambord',
+      locale: const Locale('fa'),
+      supportedLocales: const [
+        Locale('en'),
+        Locale('fa'),
+      ],
       darkTheme: ThemeData.dark(),
       home: const HomeScreen(),
     );
