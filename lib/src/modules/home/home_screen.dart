@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../components/offline_component.dart';
 import '../../logic/connectivity_service.dart';
-import '../../logic/url_provider.dart';
+import '../../logic/tambord_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

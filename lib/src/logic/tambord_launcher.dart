@@ -1,4 +1,3 @@
-import 'package:tmb/src/utils/safe_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // /// [UrlProvider]:

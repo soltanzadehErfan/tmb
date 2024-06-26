@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'src/core/my_app.dart';
-import 'src/logic/url_provider.dart';
 
 // Future<void> main() async => runApp(
 //       MultiProvider(
