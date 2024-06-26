@@ -17,16 +17,16 @@ class OfflineComponent extends StatelessWidget {
             Icon(
               Icons.network_check_rounded,
               size: 100,
-              color: Colors.grey[500],
+              color: Colors.grey[600],
             ),
             const SizedBox(height: 8),
-            TextButton(
+            const TextButton(
               onPressed: null,
               child: Text(
                 'You are offline :(',
                 style: TextStyle(
                   fontSize: 20,
-                  color: Colors.grey[800],
+                  color: Colors.grey,
                 ),
               ),
             ),
