@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// [EmptyContent]: This component gives an empty content widget for you
-/// optional String? message: You can add your optional message by default it is 'There is no data here!'
-class EmptyContent extends StatelessWidget {
-  final String? message;
-
-  const EmptyContent({
+/// [OfflineComponent]: Use this as a offline handling widget
+class OfflineComponent extends StatelessWidget {
+  const OfflineComponent({
     super.key,
-    this.message,
   });
 
   @override
@@ -24,11 +20,14 @@ class EmptyContent extends StatelessWidget {
               color: Colors.grey[500],
             ),
             const SizedBox(height: 8),
-            Text(
-              message ?? 'There is no data here!',
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey[800],
+            TextButton(
+              onPressed: null,
+              child: Text(
+                'You are offline :(',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey[800],
+                ),
               ),
             ),
           ],

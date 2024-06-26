@@ -1,4 +1,4 @@
-package com.example.tmb
+package com.simagar.tambord
 
 import io.flutter.embedding.android.FlutterActivity
 
