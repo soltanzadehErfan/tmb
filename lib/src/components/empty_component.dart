@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 /// [EmptyContent]: This component gives an empty content widget for you
 /// optional String? message: You can add your optional message by default it is 'There is no data here!'
-class EmptyContent extends StatelessWidget {
+class EmptyComponent extends StatelessWidget {
   final String? message;
 
-  const EmptyContent({
+  const EmptyComponent({
     super.key,
     this.message,
   });
