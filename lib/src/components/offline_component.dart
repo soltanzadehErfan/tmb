@@ -2,6 +2,8 @@ import 'package:ditredi/ditredi.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart';
 
+import '../logic/connectivity_service.dart';
+import '../logic/tambord_launcher.dart';
 import '../utils/assets.dart';
 
 /// [OfflineComponent]: Use this as an offline handling widget
@@ -15,6 +17,7 @@ class OfflineComponent extends StatefulWidget {
 class _OfflineComponentState extends State<OfflineComponent> {
   late DiTreDiController controller;
   Mesh3D? mesh;
+  String _connectionStatus = 'unknown';
 
   @override
   void initState() {
@@ -25,6 +28,7 @@ class _OfflineComponentState extends State<OfflineComponent> {
       light: Vector3(-0.5, -0.5, 0.5),
     );
     _loadMesh();
+    _checkConnectivity();
   }
 
   Future<void> _loadMesh() async {
@@ -39,6 +43,43 @@ class _OfflineComponentState extends State<OfflineComponent> {
     }
   }
 
+  Future<void> _checkConnectivity() async {
+    final status = await connectivityChecker();
+    setState(() {
+      _connectionStatus = status;
+    });
+
+    if (status == 'online') {
+      _launchUrl();
+    }
+  }
+
+  void _launchUrl() async {
+    try {
+      await launchTambord();
+      _showSuccessSnackBar();
+    } catch (e) {
+      _showErrorSnackBar(e);
+    }
+  }
+
+  void _showSuccessSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'خوش برگشتی :)',
+          style: TextStyle(fontFamily: 'IranSans'),
+        ),
+      ),
+    );
+  }
+
+  void _showErrorSnackBar(dynamic error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Failed to launch URL: ${error.toString()}')),
+    );
+  }
+
   @override
   void dispose() {
     controller.dispose();
@@ -47,33 +88,41 @@ class _OfflineComponentState extends State<OfflineComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 300,
-            width: 300,
-            child: mesh == null
-                ? const CircularProgressIndicator()
-                : DiTreDiDraggable(
-                    controller: controller,
-                    child: DiTreDi(
-                      figures: [
-                        mesh!,
-                      ],
-                      controller: controller,
-                    ),
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 300,
+                width: 300,
+                child: mesh == null
+                    ? const CircularProgressIndicator()
+                    : DiTreDiDraggable(
+                        controller: controller,
+                        child: DiTreDi(
+                          figures: [
+                            mesh!,
+                          ],
+                          controller: controller,
+                        ),
+                      ),
+              ),
+              ElevatedButton(
+                onPressed: _checkConnectivity,
+                child: const Text(
+                  '! آفلاینی',
+                  style: TextStyle(
+                    fontFamily: 'IranSans',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
+              ),
+            ],
           ),
-          const Text(
-            'YOU ARE OFFLINE :(',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
