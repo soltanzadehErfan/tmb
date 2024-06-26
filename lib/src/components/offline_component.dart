@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// [OfflineComponent]: this component gives a offline widget for you
+/// [OfflineComponent]: Use this as a offline handling widget
 class OfflineComponent extends StatelessWidget {
   const OfflineComponent({
     super.key,
@@ -16,17 +16,17 @@ class OfflineComponent extends StatelessWidget {
           children: [
             Icon(
               Icons.network_check_rounded,
-              size: 80,
-              color: Colors.grey[400],
+              size: 100,
+              color: Colors.grey[500],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             TextButton(
               onPressed: null,
               child: Text(
-                'YOU ARE OFFLINE :(',
+                'You are offline :(',
                 style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
+                  fontSize: 20,
+                  color: Colors.grey[800],
                 ),
               ),
             ),

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-/// [EmptyContent]: this component gives a empty content widget for you
-/// optional String message: you can add your optional message
+/// [EmptyContent]: This component gives an empty content widget for you
+/// optional String? message: You can add your optional message by default it is 'There is no data here!'
 class EmptyContent extends StatelessWidget {
   final String? message;
 
-  const EmptyContent({super.key, this.message});
+  const EmptyContent({
+    super.key,
+    this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +20,15 @@ class EmptyContent extends StatelessWidget {
           children: [
             Icon(
               Icons.network_check_rounded,
-              size: 80,
-              color: Colors.grey[400],
+              size: 100,
+              color: Colors.grey[500],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             Text(
-              message ?? 'no data',
+              message ?? 'There is no data here!',
               style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[600],
+                fontSize: 20,
+                color: Colors.grey[800],
               ),
             ),
           ],
