@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tmb/src/logic/notification_service.dart';
 import '../../components/offline_component.dart';
 import '../../logic/connectivity_service.dart';
 import '../../logic/tambord_launcher.dart';
@@ -31,9 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _launchUrlOnStart() async {
-    // final urlProvider = Provider.of<UrlProvider>(context, listen: false);
     try {
-      // await urlProvider.launchTambord();
       await launchTambord();
     } catch (e) {
       _showErrorSnackBar(e);
@@ -54,11 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ? const OfflineComponent()
             : ElevatedButton(
                 onPressed: () async {
-                  // final urlProvider =
-                  //     Provider.of<UrlProvider>(context, listen: false);
                   try {
-                    // await urlProvider.launchTambord();
                     await launchTambord();
+                    await NotificationService().showNotification(
+                      0,
+                      'Notification Title',
+                      'Notification Body',
+                      'payload',
+                    );
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(e.toString())),
