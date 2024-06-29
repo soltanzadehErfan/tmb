@@ -6,7 +6,8 @@ import '../logic/connectivity_service.dart';
 import '../logic/tambord_launcher_service.dart';
 import '../utils/assets.dart';
 
-/// [OfflineComponent]: Use this as an offline handling widget
+/// [OfflineComponent]: This widget handles offline scenarios.
+/// It displays a 3D model and a button to refresh the connection status.
 class OfflineComponent extends StatefulWidget {
   const OfflineComponent({super.key});
 
@@ -31,6 +32,7 @@ class _OfflineComponentState extends State<OfflineComponent> {
     _checkConnectivity();
   }
 
+  /// [_loadMesh] Loads the 3D mesh model.
   Future<void> _loadMesh() async {
     try {
       final List<Face3D> faces =
@@ -43,6 +45,8 @@ class _OfflineComponentState extends State<OfflineComponent> {
     }
   }
 
+  /// [_checkConnectivity] Checks the current connectivity status and updates the state.
+  /// If the user is online, it launches the URL.
   Future<void> _checkConnectivity() async {
     final status = await connectivityChecker();
     setState(() {
@@ -54,6 +58,7 @@ class _OfflineComponentState extends State<OfflineComponent> {
     }
   }
 
+  /// [_launchUrl] Launches the specified URL and shows a success message.
   void _launchUrl() async {
     try {
       await launchTambord();
@@ -63,6 +68,7 @@ class _OfflineComponentState extends State<OfflineComponent> {
     }
   }
 
+  /// [_showSuccessSnackBar] Displays a success message.
   void _showSuccessSnackBar() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -74,6 +80,7 @@ class _OfflineComponentState extends State<OfflineComponent> {
     );
   }
 
+  /// [_showErrorSnackBar] Displays an error message if URL launch fails.
   void _showErrorSnackBar(dynamic error) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Failed to launch URL: ${error.toString()}')),
@@ -109,6 +116,7 @@ class _OfflineComponentState extends State<OfflineComponent> {
                         ),
                       ),
               ),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _checkConnectivity,
                 child: const Text(
