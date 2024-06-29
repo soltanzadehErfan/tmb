@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 import '../logic/connectivity_service.dart';
-import '../logic/tambord_launcher.dart';
+import '../logic/tambord_launcher_service.dart';
 import '../utils/assets.dart';
 
 /// [OfflineComponent]: Use this as an offline handling widget
